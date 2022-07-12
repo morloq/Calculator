@@ -1,3 +1,33 @@
+//get all buttons:
+let reset = document.getElementById("#AC");
+let plusMinus = document.getElementById("#plusMinus");
+let modulo = document.getElementById("#modulo");
+let div = document.getElementById("#divide");
+
+let seven = document.getElementById("#seven");
+let eight = document.getElementById("#eight");
+let nine = document.getElementById("#nine");
+let mult = document.getElementById("#multiply");
+
+let four = document.getElementById("#four");
+let five = document.getElementById("#five");
+let six = document.getElementById("#six");
+let minus = document.getElementById("#minus"); 
+
+let one = document.getElementById("#one");
+let two = document.getElementById("#two");
+let three = document.getElementById("#three");
+let plus = document.getElementById("#plus");
+
+let zero = document.getElementById("#zero");
+let comma = document.getElementById("#comma");
+let equal = document.getElementById("#equals");
+
+//save
+let numbersClicked = [];
+let operatorClicked;
+//set event listeners
+
 //basic caluclator functions version one:
 function add(num1, num2) {
     return num1 + num2;
@@ -53,9 +83,14 @@ function clear() {
 }
 
 //set current operation field text
+function setCurrentOperation() {
 
+}
 
 //set output field
+function setResult() {
+
+}
 
 //ensure that after an operator has been pressed, another cannot
 //be pressed after it without a number between them
@@ -69,8 +104,8 @@ function clear() {
 //if no number has been pressed or just an operator, ensure clicking
 //"=" does not do anything
 
-//error message if user tries to divide by 0
-//don't let a division by 0 execute in any way
+//error message if user tries to divide by 0 -> done
+//don't let a division by 0 execute in any way -> done
 
 //round answers to two decimals, or maybe one
 
