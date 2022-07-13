@@ -79,7 +79,7 @@ function inputDot(dot) {
             calculator.displayValue += dot;
         }
     }
-    else if(calculator.waitForSecondOperand) {
+    if(calculator.waitForSecondOperand) {
         console.log(calculator.secondOperand);
         if(!calculator.secondOperand.includes(dot) && !isNaN(calculator.secondOperand)) {
             calculator.secondOperand += dot;//works, but is not displayed
