@@ -47,13 +47,6 @@ const keys = document.querySelector(".buttons").addEventListener("click", (event
     }
 });
 
-function modulo(num1, num2) {
-    return num1 % num2;
-}
-
-//clear function
-//should wipe everything, all obj or data structures used to store
-//data, all fields etc.
 function clear() {
     document.querySelector(".window-result").textContent="";
     calculator.displayValue = '0';
@@ -73,18 +66,25 @@ function setDigit(digit) {
     }
     else {
         calculator.displayValue = displayValue === '0' ? digit : displayValue + digit;
-        //calculator.firstOperand += digit;
+        calculator.firstOperand = calculator.displayValue;
     }
     console.log(calculator);
 }
 
 function inputDot(dot) {
-
-    if(!calculator.displayValue.includes(dot)) {
-        calculator.displayValue += dot;
+    console.log(typeof firstOperand);
+    calculator.firstOperand = "" + calculator.firstOperand;
+    if(!calculator.firstOperand.includes(dot)) {
+        if(!isNaN(calculator.displayValue.charAt(calculator.displayValue.length-1))){
+            calculator.displayValue += dot;
+        }
     }
-    else if(calculator.displayValue.includes(dot) && !calculator.secondOperand.contains(dot)) {
-        calculator.secondOperand += dot;
+    else if(calculator.waitForSecondOperand) {
+        console.log(calculator.secondOperand);
+        if(!calculator.secondOperand.includes(dot) && !isNaN(calculator.secondOperand)) {
+            calculator.secondOperand += dot;//works, but is not displayed
+            calculator.displayValue = calculator.firstOperand + calculator.operator + calculator.secondOperand;
+        }
     }
 }
 
@@ -130,9 +130,7 @@ function handleOperator(Currentoperator) {
     }
 }
 
-
-//takes opeator and two numbers and calls one of the above functions
-//depending on the operator received as parameter
+//takes opeator and two numbers and calls the corrolating function
 function operate(num1, operator, num2) {
     let toBeDisplayed;
     if(operator == "%"){
@@ -154,7 +152,7 @@ function operate(num1, operator, num2) {
     return toBeDisplayed;
 }
 
-//basic caluclator functions version one:
+//basic caluclator functions:
 function add(num1, num2) {
     console.log(num1 + num2);
     return +num1 + +num2;//otherwise strings are concactenated!
@@ -178,6 +176,10 @@ function divide(num1, num2){
         clear();
         return 0;
     }
+}
+
+function modulo(num1, num2) {
+    return num1 % num2;
 }
 
 
