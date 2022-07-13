@@ -118,7 +118,6 @@ function handleOperator(Currentoperator) {
     }
     else if(operator) {
         let result = operate(firstOperand, operator, secondOperand);
-        result = parseFloat(result);
         console.log(result);
         calculator.displayResult = result;
         document.querySelector(".window-result").textContent = calculator.displayResult;
@@ -134,9 +133,6 @@ function handleOperator(Currentoperator) {
 
 //takes opeator and two numbers and calls the corrolating function
 function operate(num1, operator, num2) {
-
-    num2 = parseFloat(num2);
-    num1 = parseFloat(num1);
 
     let toBeDisplayed;
     if(operator == "%"){
@@ -174,7 +170,7 @@ function multiply(num1, num2) {
 
 function divide(num1, num2){
     if(num2 != 0){
-        return Math.round(num1 / num2);
+        return num1 / num2;
     }
     else if(num2 == 0){
         alert("Division by zero is not supported \n " +
