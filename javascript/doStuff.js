@@ -92,6 +92,15 @@ function handleOperator(Currentoperator) {
     const inputValue = parseFloat(displayValue);
     calculator.firstOperand = parseFloat(inputValue);
     
+    //if operators are entered consecutively, replace the old with 
+    //the new -> no operator after an operator and no need to delete
+    //entire input if typo occurs
+    if(calculator.operator != null && calculator.waitForSecondOperand)
+    {
+        calculator.waitForSecondOperand = false;
+        calculator.operator = Currentoperator;
+    }
+
     if(firstOperand == '' && !isNaN(inputValue)) {
         calculator.firstOperand = inputValue;
     }
@@ -148,7 +157,8 @@ function operate(num1, operator, num2) {
 
 //basic caluclator functions version one:
 function add(num1, num2) {
-    return num1 + num2;
+    console.log(num1 + num2);
+    return +num1 + +num2;//otherwise strings are concactenated!
 }
 
 function subtract(num1, num2) {
