@@ -23,6 +23,7 @@ const keys = document.querySelector(".buttons").addEventListener("click", (event
         handleOperator(target.textContent);
         if(target.textContent != "=") {
             updateDisplay();
+            console.log(calculator);
         }
         return;
     }
@@ -54,18 +55,20 @@ function clear() {
     calculator.secondOperand = '';
     calculator.waitForSecondOperand = false;
     calculator.operator = null;
+    calculator.displayResult = '';
     document.querySelector(".window-currentOperator").textContent = calculator.displayValue;
 }
 
 //set current operation field text
 function setDigit(digit) {
     const { displayValue, firstOperand, waitForSecondOperand } = calculator;
+    console.log(calculator);
     if(waitForSecondOperand) {
         calculator.secondOperand += digit;
         calculator.displayValue += digit;
     }
-    else {
-        calculator.displayValue = displayValue === '0' ? digit : displayValue + digit;
+    else{
+        calculator.displayValue = displayValue === '0' ? digit : +displayValue + +digit;
         calculator.firstOperand = calculator.displayValue;
     }
     console.log(calculator);
@@ -93,7 +96,7 @@ function handleOperator(Currentoperator) {
 
     const inputValue = parseFloat(displayValue);
     calculator.firstOperand = parseFloat(inputValue);
-    
+
     //if operators are entered consecutively, replace the old with 
     //the new -> no operator after an operator and no need to delete
     //entire input if typo occurs
@@ -103,11 +106,18 @@ function handleOperator(Currentoperator) {
         calculator.operator = Currentoperator;
     }
 
-    if(Currentoperator != "=") {
+    if(Currentoperator != "=" && Currentoperator != "d") {
         calculator.displayValue += Currentoperator;
         calculator.operator = Currentoperator;
     }
-    calculator.waitForSecondOperand = true;
+
+    if(Currentoperator == "d" && !calculator.waitForSecondOperand && calculator.operator == null){
+        //firstOperand reset:
+        calculator.firstOperand = '';
+        calculator.waitForSecondOperand = false;
+        calculator.displayValue = calculator.firstOperand;
+    }
+    else{calculator.waitForSecondOperand = true;}
     /*if operator is clicked, firstOperand is
     converted to float (and rounded). 
     operator property is set to whatever operator was clicked
@@ -183,7 +193,6 @@ function divide(num1, num2){
 function modulo(num1, num2) {
     return num1 % num2;
 }
-
 
 function updateDisplay(){
     document.querySelector(".window-currentOperator").textContent = calculator.displayValue;
