@@ -6,6 +6,7 @@ const calculator = {//to store values
     secondOperand: ' ',
     operator: null,
 };
+document.querySelector(".window-currentOperator").textContent = "0";//start out with 0
 
 const keys = document.querySelector(".buttons").addEventListener("click", (event) =>{
     const { target } = event;
