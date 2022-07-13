@@ -188,8 +188,3 @@ function modulo(num1, num2) {
 function updateDisplay(){
     document.querySelector(".window-currentOperator").textContent = calculator.displayValue;
 }
-
-//ensure dot cannot be pressed if operator is right before it...
-//round answers to two decimals, or maybe one
-
-clear();
