@@ -81,7 +81,7 @@ function inputDot(dot) {
     }
     if(calculator.waitForSecondOperand) {
         console.log(calculator.secondOperand);
-        if(!calculator.secondOperand.includes(dot) && !isNaN(calculator.secondOperand)) {
+        if(!calculator.secondOperand.includes(dot) && !isNaN(calculator.secondOperand) && calculator.secondOperand.length > 0) {
             calculator.secondOperand += dot;//works, but is not displayed
             calculator.displayValue = calculator.firstOperand + calculator.operator + calculator.secondOperand;
         }
@@ -117,8 +117,10 @@ function handleOperator(Currentoperator) {
         calculator.firstOperand = inputValue;
     }
     else if(operator) {
-        const result = operate(firstOperand, operator, secondOperand);
-        calculator.displayResult = String(result);
+        let result = operate(firstOperand, operator, secondOperand);
+        result = parseFloat(result);
+        console.log(result);
+        calculator.displayResult = result;
         document.querySelector(".window-result").textContent = calculator.displayResult;
         calculator.displayValue = calculator.displayResult;
         calculator.firstOperand = calculator.displayResult;
@@ -132,21 +134,25 @@ function handleOperator(Currentoperator) {
 
 //takes opeator and two numbers and calls the corrolating function
 function operate(num1, operator, num2) {
+
+    num2 = parseFloat(num2);
+    num1 = parseFloat(num1);
+
     let toBeDisplayed;
     if(operator == "%"){
-        toBeDisplayed = modulo(num1, num2);
+        toBeDisplayed = parseFloat(modulo(num1, num2));
     }
     else if(operator == "÷") {
-        toBeDisplayed = divide(num1, num2);
+        toBeDisplayed = parseFloat(divide(num1, num2));
     }
     else if(operator == "x") {
-        toBeDisplayed = multiply(num1, num2);
+        toBeDisplayed = parseFloat(multiply(num1, num2));
     }
     else if(operator == "-") {
-        toBeDisplayed = subtract(num1, num2);
+        toBeDisplayed = parseFloat(subtract(num1, num2));
     }
     else if(operator == "+"){
-        toBeDisplayed = add(num1, num2);
+        toBeDisplayed = parseFloat(add(num1, num2));
     }
 
     return toBeDisplayed;
