@@ -1,9 +1,9 @@
 const calculator = {//to store values
     displayResult: '',
     displayValue: '0',
-    firstOperand: '',
+    firstOperand: ' ',
     waitForSecondOperand: false,//if true, the next number entered will constitute the second operand
-    secondOperand: '',
+    secondOperand: ' ',
     operator: null,
 };
 
@@ -67,13 +67,12 @@ function clear() {
 //set current operation field text
 function setDigit(digit) {
     const { displayValue, firstOperand, waitForSecondOperand } = calculator;
-    console.log(calculator.waitForSecondOperand);
     if(waitForSecondOperand) {
         calculator.secondOperand += digit;
         calculator.displayValue += digit;
     }
     else {
-        calculator.displayValue = displayValue == "0" ? digit : displayValue + digit;
+        calculator.displayValue = displayValue === '0' ? digit : displayValue + digit;
         //calculator.firstOperand += digit;
     }
     console.log(calculator);
@@ -83,6 +82,9 @@ function inputDot(dot) {
 
     if(!calculator.displayValue.includes(dot)) {
         calculator.displayValue += dot;
+    }
+    else if(calculator.displayValue.includes(dot) && !calculator.secondOperand.contains(dot)) {
+        calculator.secondOperand += dot;
     }
 }
 
@@ -101,6 +103,16 @@ function handleOperator(Currentoperator) {
         calculator.operator = Currentoperator;
     }
 
+    if(Currentoperator != "=") {
+        calculator.displayValue += Currentoperator;
+        calculator.operator = Currentoperator;
+    }
+    calculator.waitForSecondOperand = true;
+    /*if operator is clicked, firstOperand is
+    converted to float (and rounded). 
+    operator property is set to whatever operator was clicked
+    waitingforsecondoperator is set to true as the first one has
+    been finalized*/
     if(firstOperand == '' && !isNaN(inputValue)) {
         calculator.firstOperand = inputValue;
     }
@@ -116,19 +128,6 @@ function handleOperator(Currentoperator) {
         calculator.secondOperand = '';
         calculator.waitForSecondOperand = false;
     }
-    console.log(calculator);
-
-    if(Currentoperator != "=") {
-        calculator.displayValue += Currentoperator;
-        calculator.operator = Currentoperator;
-    }
-    calculator.waitForSecondOperand = true;
-    /*if operator is clicked, firstOperand is
-    converted to float (and rounded). 
-    operator property is set to whatever operator was clicked
-    waitingforsecondoperator is set to true as the first one has
-    been finalized*/
-
 }
 
 
@@ -173,8 +172,11 @@ function divide(num1, num2){
     if(num2 != 0){
         return Math.round(num1 / num2);
     }
-    else{
-        alert("Division by zero is not supported");
+    else if(num2 == 0){
+        alert("Division by zero is not supported \n " +
+        "calculator reset");
+        clear();
+        return 0;
     }
 }
 
@@ -183,26 +185,7 @@ function updateDisplay(){
     document.querySelector(".window-currentOperator").textContent = calculator.displayValue;
 }
 
-//ensure that after an operator has been pressed, another cannot
-//be pressed after it without a number between them
-
-//give out result to output field if "=" is pressed
-
-//store number as soon as one of the operators is pressed
-//store second number the same way but maybe in different obj?
-
-//if no number has been pressed or just an operator, ensure clicking
-//"=" does not do anything
-
-//error message if user tries to divide by 0 -> done
-//don't let a division by 0 execute in any way -> done
-
+//ensure dot cannot be pressed if operator is right before it...
 //round answers to two decimals, or maybe one
 
-function ACSymbol() {
-    if(calculator.displayValue != 0) {
-        document.querySelector("#AC").textContent ="C";
-    }
-}
-ACSymbol();
 clear();
