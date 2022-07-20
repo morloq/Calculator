@@ -69,7 +69,7 @@ function setDigit(digit) {
         calculator.displayValue += digit;
     }
     else{
-        calculator.displayValue = displayValue === '0' ? digit : +displayValue + +digit;
+        calculator.displayValue = displayValue === '0' ? +digit : displayValue + digit;
         calculator.firstOperand = calculator.displayValue;
     }
     console.log(calculator);
